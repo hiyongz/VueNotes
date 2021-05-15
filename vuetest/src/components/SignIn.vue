@@ -23,11 +23,15 @@ export default {
     },
     login () {
       const postData = {
-        username: this.username,
+        userName: this.username,
         password: this.password
       }
       this.$api.user.signIn(postData).then(res => {
         console.log(res)
+        localStorage.setItem('token', res.data.data.token)
+        localStorage.setItem('username', this.username)
+        // 跳转到主页
+        this.$router.push({ name: 'Case' })
       })
     }
   }

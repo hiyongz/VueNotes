@@ -25,7 +25,7 @@ export default {
     },
     register () {
       const postData = {
-        username: this.username,
+        userName: this.username,
         password: this.password,
         email: this.email
       }
