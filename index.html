@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+        <!-- v-if v-else -->
+        <div v-if="show">展示</div>
+        <div v-else>不展示</div>
+
+        <!-- v-show -->
+        <div v-show="show">hello</div>
+
+        <!-- v-for -->
+        <p v-for="(value,index) in arr">{{value}}--{{index}}</p>
+        <p v-for="(value,key,index) in obj">{{value}}--{{key}}--{{index}}</p>
+        <p v-for="value in objarr">{{value.name}}</p>
+
+        <!-- v-on -->
+        <button v-on:click="add()">add</button>
+        <div>{{count}}</div>
+
+        <!-- v-bind -->
+        <div style="width: 100px;height: 100px;border: 1px solid #000;" v-bind:style="bgcolor">{{count}}</div>
+        
+        <!-- v-model -->
+        <!-- 双向数据绑定 -->
+        <input type="text" v-model="text">
+        <button @click="showText()">打印</button>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                show:false,
+                arr:["hello","world","!"],
+                obj:{
+                    name:"zhangsan",
+                    age:"18",
+                    sex:'male'
+                },
+                objarr:[
+                {
+                    name:"lishi",
+                    age:"18",
+                    sex:'male'
+                },
+                {
+                    name:"zhangsan",
+                    age:"18",
+                    sex:'male'
+                },
+                {
+                    name:"wanger",
+                    age:"22",
+                    sex:'female'
+                },
+
+                ],
+                count:1,
+                bgcolor:{
+                    backgroundColor:'red'
+                },
+                text:"123"
+            },
+            methods: {
+                add(){
+                    this.count++
+                },
+                showText(){
+                    console.log(this.text)
+                }
+            },
+            created(){
+                console.log("加载完成")
+            }
+        })
+    </script>
+</body>
+</html>
