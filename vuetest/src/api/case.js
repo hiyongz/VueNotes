@@ -8,7 +8,11 @@ const cases = {
     return axios.post('/testCase/text', params)
   },
   createCaseByFile (params) {
-    return axios.post('/testCase/file', params)
+    return axios.post('/testCase/file', {
+      methods: 'post',
+      data: params,
+      headers: { 'Content-type': 'multipart/form-data' }
+    })
   }
 }
 

@@ -20,7 +20,8 @@
             <v-container>
                 <v-text-field label="用例名称" v-model="addItem.name"></v-text-field>
                 <v-select :items="selectItem" label="用例类型" v-model="addItem.type"></v-select>
-                <v-textarea label="用例数据" v-model="addItem.data"></v-textarea>
+                <v-textarea label="用例数据" v-model="addItem.data" v-if="addItem.type=='文本'"></v-textarea>
+                <v-file-input label="用例数据" v-model="addItem.file" v-if="addItem.type=='文件'" outlined dense ></v-file-input>
                 <v-text-field label="备注" v-model="addItem.remark"></v-text-field>
             </v-container>
           </v-card-text>
@@ -103,18 +104,38 @@ export default {
   methods: {
     addCase () {
       console.log(this.addItem)
-      const postData = {
-        caseData: this.addItem.data,
-        caseName: this.addItem.name,
-        remark: this.addItem.remark
+      if (this.addItem.type === '文本') {
+        const postData = {
+          caseData: this.addItem.data,
+          caseName: this.addItem.name,
+          remark: this.addItem.remark
+        }
+        this.$api.cases.createCaseByText(postData).then(res => {
+          console.log(res)
+          this.addDialog = false
+        })
+      } else if (this.addItem.type === '文件') {
+        const postData = new FormData()
+        postData.append('caseFile', this.addItem.file)
+        postData.append('caseData', this.addItem.data)
+        postData.append('caseName', this.addItem.name)
+        this.$api.cases.createCaseByFile(postData).then(res => {
+          console.log(res)
+        })
       }
-      this.$api.cases.createCaseByText(postData).then(res => {
+      this.addDialog = false
+      const postData = {
+        pageNum: 1,
+        pageSize: 10
+      }
+      this.$api.cases.getList(postData).then(res => {
         console.log(res)
-        this.addDialog = false
+        this.desserts = res.data.data.data
       })
     }
   }
 }
+
 </script>
 
 <style scoped>
