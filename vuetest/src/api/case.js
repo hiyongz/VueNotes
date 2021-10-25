@@ -13,6 +13,15 @@ const cases = {
       data: params,
       headers: { 'Content-type': 'multipart/form-data' }
     })
+  },
+  deleteCase (params) {
+    return axios.delete('/testCase/' + params.caseId, params)
+  },
+  editCase (params) {
+    return axios.put('/testCase/', params)
+  },
+  createTask (params) {
+    return axios.post('/task/', params)
   }
 }
 
